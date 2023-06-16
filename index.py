@@ -99,7 +99,7 @@ while True:
 
             # ローカルファイルからデータをロードし、しまうまの存在可否によってアップロードするバケットを分ける
             image_data = open(image_file_path, 'rb')
-            json_data = open(image_file_path, 'rb')
+            json_data = open(json_file_path, 'rb')
             
             # バケット名をキリンにしてしまった。。。
             if zebra_exist(classification_result):
