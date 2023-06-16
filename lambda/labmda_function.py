@@ -22,14 +22,16 @@ def lambda_handler(event, context):
     ExpiresIn=3600
     )
     
-    print(key)
-    
     json_key = f'{os.path.splitext(key)[0]}.json'
-    print(json_key)
     response = s3_client.get_object(Bucket=bucket, Key=json_key)
-    data = json.loads(response['Body'].read().decode('utf-8'))
+    data = json.loads(response['Body'].read())
+    
+    output_string = ''
+    for key, value in data['classifications'].items():
+        output_string += f"{key}: {value['category']} {value['score']}\n"
 
-    attachments = [{"text":  f'しまうま発見！\n {data}', "image_url": image_object_url}]
+
+    attachments = [{"text":  f'しまうま発見！\n {output_string}', "image_url": image_object_url}]
     slack.notify(attachments=attachments)
         
     return {
