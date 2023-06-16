@@ -4,3 +4,4 @@ opencv-python
 vidgear
 yt-dlp # vidgearの依存関係で必要
 slackweb
+boto3
