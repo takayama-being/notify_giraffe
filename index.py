@@ -110,7 +110,7 @@ while True:
             else:
                 print('しまうまはいない')
                 s3.Bucket('notify-giraffe').put_object(Key=f'giraffe_not_found/{image_file_name}', Body=image_data)
-                s3.Bucket('notify-giraffe').put_object(Key=f'giraffe_not_found/{json_file_path}', Body=json_data)
+                s3.Bucket('notify-giraffe').put_object(Key=f'giraffe_not_found/{json_file_name}', Body=json_data)
 
             # ローカルファイルを削除
             os.remove(image_file_path)
