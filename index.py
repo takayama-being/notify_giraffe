@@ -59,7 +59,7 @@ stream = CamGear(
 start_time = time.time()
 
 last_snapshot_time = start_time
-interval_sec = os.environ.get("INTERVAL_SEC", 10)
+interval_sec = int(os.environ.get("INTERVAL_SEC", '10'))
 while True:
     frame = stream.read()
 
