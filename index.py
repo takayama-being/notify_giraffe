@@ -103,10 +103,12 @@ while True:
             
             # バケット名をキリンにしてしまった。。。
             if zebra_exist(classification_result):
+                print('しまうま発見')
                 s3.Bucket('notify-giraffe').put_object(Key=f'giraffe_found/{image_file_name}', Body=image_data)
                 s3.Bucket('notify-giraffe').put_object(Key=f'giraffe_found/{json_file_name}', Body=json_data)
                 
             else:
+                print('しまうまはいない')
                 s3.Bucket('notify-giraffe').put_object(Key=f'giraffe_not_found/{image_file_name}', Body=image_data)
                 s3.Bucket('notify-giraffe').put_object(Key=f'giraffe_not_found/{json_file_path}', Body=json_data)
 
