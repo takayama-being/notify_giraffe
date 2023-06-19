@@ -4,7 +4,7 @@ import os
 import json
 
 webhook_url = os.environ.get("SLACK_WEBHOOK_URL")
-s3_region = os.environ.get("REGION")
+s3_region = os.environ.get("REGION", "ap-northeast-1")
 slack = slackweb.Slack(url=webhook_url)
 
 s3_client = boto3.client('s3', region_name=s3_region)
@@ -15,12 +15,14 @@ def lambda_handler(event, context):
 
     # パブリックにアクセスさせないようにしているので、署名付きURLを発行する。
     # いつでもアクセスできるようにしたければs3のポリシーを修正し以下をコメントイン。
-    # image_object_url = f"https://s3-{s3_region}.amazonaws.com/{bucket}/{key}"
-    image_object_url = s3_client.generate_presigned_url(
-    'get_object',
-    Params={'Bucket': bucket, 'Key': key},
-    ExpiresIn=3600
-    )
+    image_object_url = f"https://s3-{s3_region}.amazonaws.com/{bucket}/{key}"
+    
+    # 署名付きURLを使いたい場合は以下をコメントイン
+    # image_object_url = s3_client.generate_presigned_url(
+    # 'get_object',
+    # Params={'Bucket': bucket, 'Key': key},
+    # ExpiresIn=3600
+    # )
     
     json_key = f'{os.path.splitext(key)[0]}.json'
     response = s3_client.get_object(Bucket=bucket, Key=json_key)
